@@ -1,14 +1,14 @@
 body,html{
     margin:0;
     padding:0;
-}
-html{
-    height:100%;
-    width:100%;
+    height:100vh;
 }
 body{
-    height:100%;
     display:flex;
-    width:100%;
     flex-direction:column;
+}
+.spedd-dial-container{
+    position:fixed;
+    right:100px;
+    bottom:100px;
 }

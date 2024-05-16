@@ -1,0 +1,21 @@
+.card-client{
+    display:flex;
+    flex-direction:row;
+    width:100%;
+    min-height:150px;
+    justify-content:center;
+    background-color:wheat;
+    border-radius:10px;
+    padding:5px;
+    gap:5px;
+}
+.card-client-body{
+    width:90%;
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    gap:15px;
+    align-self:center;
+}
+.card-client-body div{
+    width:100%;
+}
