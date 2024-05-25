@@ -11,12 +11,17 @@ import {Avatar} from "primereact/avatar";
 import {Button} from "primereact/button";
 import {AddCuentaDialog} from "./components/AddCuentaDialog.jsx";
 import {SearchBar} from "../../../shared/components/SearchBar.jsx";
+import {Cuenta} from "./components/Cuenta.jsx";
+import {useNavigate} from "react-router-dom";
 
 export function Clientes() {
     const [formVisible, setFormVisible] = useState(false)
     const {setters, http, estado, clientes} = useClient()
     const [cuentaFormVisible,setCuentaFormVisible] = useState(false)
     const [clienteSelected,setClienteSelected] = useState(null);
+    const [cuentaSelected,setCuentaSelected] = useState(null);
+    const [showCuenta,setShowCuenta] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
         http.getAllClients()
     }, [])
@@ -31,6 +36,7 @@ export function Clientes() {
                     icon="pi pi-plus"
                     severity="danger"
                     onClick={()=>{
+                        setCuentaSelected(cliente);
                         setClienteSelected(cliente.id)
                         setCuentaFormVisible(true);
                     }}
@@ -43,12 +49,16 @@ export function Clientes() {
                     severity="success"
                     rounded={true}
                     outlined={true}
+                    onClick={()=>{
+                        navigate(`/customers/account/${cliente.id}`)
+                        setShowCuenta(true)
+                    }}
                 />)
 
     }
 
     return (
-        <div className="page productos">
+        <div className="page clientes">
             <div className="header-page-container">
                 <h2 className="title-page">  Gestión de clientes</h2>
                 <hr/>
@@ -57,14 +67,14 @@ export function Clientes() {
 
             <div className="client-container">
 
-                <div className="card mt-5">
-                    <DataTable value={clientes} tableStyle={{minWidth: '50rem'}} scrollable={true} scrollHeight="500px">
-                        <Column header="Avatar" body={<Avatar icon="pi pi-user" size="xlarge"/>}></Column>
-                        <Column field="dni" header="DNI"></Column>
+                <div className="card mt-5 pl-5 pr-5" style={{width:"100%"}}>
+                    <DataTable value={clientes} tableStyle={{minWidth: '20rem'}}>
+                        <Column header="Avatar" body={<Avatar icon="pi pi-user" size="xlarge"/>} ></Column>
+                        <Column field="dni" header="DNI" ></Column>
                         <Column field="nombres" header="Nombres"></Column>
                         <Column field="apellidoPaterno" header="Apellido Paterno"></Column>
                         <Column field="apellidoMaterno" header="Apellido Materno"></Column>
-                        <Column field="email" header="Emmail"></Column>
+                        <Column field="email" header="Email"></Column>
                         <Column field="telefono" header="Telefono"></Column>
                         <Column header="Cuenta" body={cuentaTemplate}></Column>
                     </DataTable>

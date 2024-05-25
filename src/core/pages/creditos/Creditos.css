@@ -1,0 +1,38 @@
+.header-cart{
+    padding:0;
+    width:100%;
+    height:40px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.header-cart h3{
+    color:black;
+    margin:0;
+    padding:0;
+}
+.cart-products{
+    border-radius:10px;
+    max-width:500px;
+    background-color:whitesmoke;
+    padding:10px;
+}
+.body-cart{
+    max-height:250px;
+    overflow-y:auto;
+}
+.step2-productos-search{
+    max-height:300px;
+    overflow-y:auto;
+}
+.footer-cart{
+    height:40px;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.order-item{
+    border-bottom:2px solid black;
+}

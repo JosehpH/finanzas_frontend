@@ -6,22 +6,26 @@ export function StepperProvider({children}){
     const [clienteSelected,setClienteSelected] = useState(null);
     const [tipoCredito,setTipoCredito] = useState(null);
     const [valorFuturoForm,setValorFuturoForm] =useState({
+        ordenId:null,
        tasaCompensatoria:{
            periodo:null,
-           tasa:null,
+           tasa:"",
            tipo:null,
            periodoCapitalizacion:null
        },
         tasaMoratoria:{
             periodo:null,
-            tasa:null,
+            tasa:"",
             tipo:null,
             periodoCapitalizacion:null
         },
-        pagoInicial:0,
+        pagoInicial:"",
         fechaDesembolso: new Date(),
         fechaVencimiento: new Date()
     });
+
+    //Para activar el periodo de gracia
+    const [checked, setChecked] = useState(false);
     const [anualidadForm,setAnualidadForm] =useState({
         tasaCompensatoria:{
             periodo:null,
@@ -35,7 +39,7 @@ export function StepperProvider({children}){
             tipo:null,
             periodoCapitalizacion:null
         },
-        pagoInicial:0,
+        pagoInicial:"",
         fechaDesembolso: new Date(),
         numCuotas:0,
         tipoAnualidad:"VENCIDA",
@@ -43,8 +47,11 @@ export function StepperProvider({children}){
         gracia:{
             numCuotas:0,
             tipo:null
-        }
+        },
+        ordenId:null
     });
+    const [orden,setOrden] = useState(null)
+    const [ordenLocal,setOrdenLocal] = useState([])
     return(
         <StepperContext.Provider value={
             {
@@ -55,7 +62,13 @@ export function StepperProvider({children}){
                 valorFuturoForm,
                 setValorFuturoForm,
                 anualidadForm,
-                setAnualidadForm
+                setAnualidadForm,
+                orden,
+                setOrden,
+                ordenLocal,
+                setOrdenLocal,
+                checked,
+                setChecked
             }
         }>
             {children}

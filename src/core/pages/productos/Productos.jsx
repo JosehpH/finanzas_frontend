@@ -34,7 +34,7 @@ export function Productos() {
             </div>
 
             <SearchBar placeholder="Buscar producto" onSearch={searchProducts}></SearchBar>
-            <div className="products-container mt-5 pl-4">
+            <div className="products-container mt-5 pl-5 pr-5">
                 {
                     products.map((product, i) => (
                         <ProductCard key={i} product={product} deleteProduct={deleteProduct}/>

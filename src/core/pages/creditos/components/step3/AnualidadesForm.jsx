@@ -6,11 +6,16 @@ import {FloatLabel} from "primereact/floatlabel";
 import {Dropdown} from "primereact/dropdown";
 import {useContext, useState} from "react";
 import {StepperContext} from "../../context/StepperContext.jsx";
-import {InputCalendario} from "../InputCalendario.jsx";
+import {InputCalendario} from "./InputCalendario.jsx";
 import {InputSwitch} from "primereact/inputswitch";
 
 export function AnualidadesForm() {
-    const {anualidadForm, setAnualidadForm} = useContext(StepperContext);
+    const {anualidadForm, setAnualidadForm, checked,setChecked} = useContext(StepperContext);
+    const [pagoInicial,setPagoInicial] = useState(anualidadForm.pagoInicial);
+    const [tasaC,setTasaC] = useState(anualidadForm.tasaCompensatoria.tasa);
+    const [tasaM,setTasaM] = useState(anualidadForm.tasaMoratoria.tasa);
+    const [numCuotas, setNumCuotas] = useState(anualidadForm.numCuotas);
+    const [numCuotasGracia, setNumCuotasGracia] = useState(anualidadForm.gracia.numCuotas);
     const tiposTasa = [
         {name: 'EFECTIVA'},
         {name: 'NOMINAL'},
@@ -33,14 +38,13 @@ export function AnualidadesForm() {
             name:"PARCIAL"
         }
     ]
-    const [checked, setChecked] = useState(false);
 
     return (
-        <form>
+        <form className="w-6">
             <h4>Crédito tipo Anualidades vencidas</h4>
             <hr/>
             <Fieldset legend="Pago inicial">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="pago-inicial">Valor del pago (S/.)</label>
                         <IconField>
@@ -50,13 +54,22 @@ export function AnualidadesForm() {
                                 placeholder="valor"
                                 type="text"
                                 className="w-11rem"
+                                value={pagoInicial}
+                                onChange={(e) => {
+                                    setPagoInicial(e.target.value)
+                                }}
+                                onBlur={(e)=>{
+                                    let formCopy = {...anualidadForm};
+                                    formCopy.pagoInicial = pagoInicial;
+                                    setAnualidadForm(formCopy);
+                                }}
                             />
                         </IconField>
                     </div>
                 </div>
             </Fieldset>
             <Fieldset legend="Fechas" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container  flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="pago-inicial">Fecha de desembolso</label>
                         <InputCalendario date={anualidadForm.fechaDesembolso} setDate={(value) => {
@@ -69,14 +82,23 @@ export function AnualidadesForm() {
                 </div>
             </Fieldset>
             <Fieldset legend="Anualidad" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="num-cuotas">Número de cuotas</label>
                         <InputText
                             id="num-cuotas"
                             placeholder="valor"
-                            type="text"
+                            type="number"
                             className="w-11rem"
+                            value={numCuotas}
+                            onChange={(e) => {
+                                setNumCuotas(e.target.value)
+                            }}
+                            onBlur={(e)=>{
+                                let formCopy = {...anualidadForm};
+                                formCopy.numCuotas = e.target.value;
+                                setAnualidadForm(formCopy);
+                            }}
                         />
                     </div>
                     <div className="flex flex-column gap-2">
@@ -107,7 +129,7 @@ export function AnualidadesForm() {
                 </div>
             </Fieldset>
             <Fieldset legend="Periodo de gracia" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container  flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="num-cuotas-gracia">Habilitar</label>
                         <InputSwitch checked={checked} onChange={(e) => setChecked(e.value)} />
@@ -121,6 +143,15 @@ export function AnualidadesForm() {
                             type="text"
                             className="w-11rem"
                             disabled={!checked}
+                            value={numCuotasGracia}
+                            onChange={(e) => {
+                                setNumCuotasGracia(e.target.value)
+                            }}
+                            onBlur={(e)=>{
+                                let formCopy = {...anualidadForm};
+                                formCopy.gracia.numCuotas = e.target.value;
+                                setAnualidadForm(formCopy);
+                            }}
                         />
                     </div>
                     <div className="flex flex-column gap-2">
@@ -142,16 +173,24 @@ export function AnualidadesForm() {
             </Fieldset>
 
             <Fieldset legend="Tasa compensatoria" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container  flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="valor-tasa">Valor de la tasa (%)</label>
                         <IconField>
-                            <InputIcon className="pi pi-percentage"> </InputIcon>
                             <InputText
                                 id="valor-tasa"
                                 placeholder="valor"
                                 type="text"
                                 className="w-11rem"
+                                value={tasaC}
+                                onChange={(e) => {
+                                    setTasaC(e.target.value)
+                                }}
+                                onBlur={(e)=>{
+                                    let formCopy = {...anualidadForm};
+                                    formCopy.tasaCompensatoria.tasa = tasaC;
+                                    setAnualidadForm(formCopy);
+                                }}
                             />
                         </IconField>
 
@@ -201,16 +240,24 @@ export function AnualidadesForm() {
                 </div>
             </Fieldset>
             <Fieldset legend="Tasa moratoria" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container  flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="valor-tasa">Valor de la tasa (%)</label>
                         <IconField>
-                            <InputIcon className="pi pi-percentage"> </InputIcon>
                             <InputText
                                 id="valor-tasa"
                                 placeholder="valor"
                                 type="text"
                                 className="w-11rem"
+                                value={tasaM}
+                                onChange={(e) => {
+                                    setTasaM(e.target.value)
+                                }}
+                                onBlur={(e)=>{
+                                    let formCopy = {...anualidadForm};
+                                    formCopy.tasaMoratoria.tasa = tasaM;
+                                    setAnualidadForm(formCopy);
+                                }}
                             />
                         </IconField>
 

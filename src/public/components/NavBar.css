@@ -1,7 +1,14 @@
 .nav-bar{
     height:60px;
+    background-color:orange;
 }
 .img-nav-bar{
     background-color:red;
     border-radius:10px;
+}
+.menu-bar{
+    background-color:gold;
+}
+.menu-bar ul li{
+    color:black;
 }

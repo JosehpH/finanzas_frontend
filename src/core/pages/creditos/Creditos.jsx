@@ -2,7 +2,7 @@ import {SpeedDial} from "primereact/speeddial";
 import {useState} from "react";
 import {NewCreditDialog} from "./components/NewCreditDialog.jsx";
 import {StepperProvider} from "./context/StepperProvider.jsx";
-
+import "./Creditos.css"
 export function Creditos(){
     const[stepperVisible,setStepperVisible] = useState(false)
     return(

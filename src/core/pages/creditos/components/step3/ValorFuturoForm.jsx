@@ -6,10 +6,14 @@ import {FloatLabel} from "primereact/floatlabel";
 import {Dropdown} from "primereact/dropdown";
 import {useContext, useState} from "react";
 import {StepperContext} from "../../context/StepperContext.jsx";
-import {InputCalendario} from "../InputCalendario.jsx";
+import {InputCalendario} from "./InputCalendario.jsx";
 
 export function ValorFuturoForm() {
     const {valorFuturoForm, setValorFuturoForm} = useContext(StepperContext);
+    const [pagoInicial,setPagoInicial] = useState(valorFuturoForm.pagoInicial);
+    const [tasaC,setTasaC] = useState(valorFuturoForm.tasaCompensatoria.tasa);
+    const [tasaM,setTasaM] = useState(valorFuturoForm.tasaMoratoria.tasa);
+
     const tiposTasa = [
         {name: 'EFECTIVA'},
         {name: 'NOMINAL'},
@@ -33,20 +37,26 @@ export function ValorFuturoForm() {
                 <div className="fieldset-container flex gap-3 flex-auto">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="pago-inicial">Valor del pago (S/.)</label>
-                        <IconField>
-                            <InputIcon className="pi pi-money-bill"> </InputIcon>
-                            <InputText
-                                id="pago-inicial"
-                                placeholder="valor"
-                                type="text"
-                                className="w-11rem"
-                            />
-                        </IconField>
+                        <InputText
+                            id="pago-inicial"
+                            placeholder="valor"
+                            type="text"
+                            className="w-11rem"
+                            value={pagoInicial}
+                            onChange={(e) => {
+                                setPagoInicial(e.target.value)
+                            }}
+                            onBlur={(e)=>{
+                                let formCopy = {...valorFuturoForm};
+                                formCopy.pagoInicial = pagoInicial;
+                                setValorFuturoForm(formCopy);
+                            }}
+                        />
                     </div>
                 </div>
             </Fieldset>
             <Fieldset legend="Fechas" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="pago-inicial">Fecha de desembolso</label>
                         <InputCalendario date={valorFuturoForm.fechaDesembolso} setDate={(value) => {
@@ -68,17 +78,26 @@ export function ValorFuturoForm() {
                 </div>
             </Fieldset>
 
-            <Fieldset legend="Tasa compensatoria" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+            <Fieldset legend="Tasa compensatoria"  className=" mt-5">
+                <div className="fieldset-container  flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="valor-tasa">Valor de la tasa (%)</label>
                         <IconField>
-                            <InputIcon className="pi pi-percentage"> </InputIcon>
                             <InputText
                                 id="valor-tasa"
                                 placeholder="valor"
                                 type="text"
                                 className="w-11rem"
+                                value={tasaC}
+                                onChange={(e) => {
+                                    setTasaC(e.target.value)
+                                }}
+                                onBlur={(e)=>{
+                                    let formCopy = {...valorFuturoForm};
+                                    formCopy.tasaCompensatoria.tasa = tasaC;
+                                    setValorFuturoForm(formCopy);
+                                }}
+
                             />
                         </IconField>
 
@@ -128,16 +147,24 @@ export function ValorFuturoForm() {
                 </div>
             </Fieldset>
             <Fieldset legend="Tasa moratoria" className="mt-5">
-                <div className="fieldset-container flex gap-3 flex-auto">
+                <div className="fieldset-container  flex gap-3 w-full flex-column lg:flex-row xl:flex-row">
                     <div className="flex flex-column gap-2">
                         <label htmlFor="valor-tasa">Valor de la tasa (%)</label>
                         <IconField>
-                            <InputIcon className="pi pi-percentage"> </InputIcon>
                             <InputText
                                 id="valor-tasa"
                                 placeholder="valor"
                                 type="text"
                                 className="w-11rem"
+                                value={tasaM}
+                                onChange={(e) => {
+                                    setTasaM(e.target.value)
+                                }}
+                                onBlur={(e)=>{
+                                    let formCopy = {...valorFuturoForm};
+                                    formCopy.tasaMoratoria.tasa = tasaM;
+                                    setValorFuturoForm(formCopy);
+                                }}
                             />
                         </IconField>
 

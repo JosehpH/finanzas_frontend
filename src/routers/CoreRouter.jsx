@@ -4,6 +4,7 @@ import {NavBar} from "../public/components/NavBar.jsx";
 import {Productos} from "../core/pages/productos/Productos.jsx";
 import {Clientes} from "../core/pages/clientes/Clientes.jsx";
 import {Creditos} from "../core/pages/creditos/Creditos.jsx";
+import {Cuenta} from "../core/pages/clientes/components/Cuenta.jsx";
 
 export function CoreRouter(){
     return (
@@ -14,6 +15,7 @@ export function CoreRouter(){
             <Route path="/products" element={<Productos/>}></Route>
             <Route path="/customers" element={<Clientes/>}></Route>
             <Route path="/credits" element={<Creditos/>}></Route>
+            <Route path="/customers/account/:customerId" element={<Cuenta/>}></Route>
             <Route path="/*" element={<Navigate to="/home"/>}/>
         </Routes>
     </>);

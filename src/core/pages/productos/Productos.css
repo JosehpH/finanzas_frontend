@@ -12,7 +12,6 @@
 .productos{
     display:flex;
     flex-direction:column;
-    justify-content:start;
     align-items:center;
 }
 .card-product-header{
@@ -24,8 +23,8 @@
 }
 .products-container{
     display:grid;
-    min-width:90%;
-    grid-template-columns:repeat(auto-fit,minmax(140px,15%));
+    width:100%;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
     background-color:whitesmoke;
     gap:20px;
 

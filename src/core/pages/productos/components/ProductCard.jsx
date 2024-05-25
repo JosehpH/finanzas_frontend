@@ -11,7 +11,7 @@ export function ProductCard({product,deleteProduct}) {
                 </div>
                 <div className="card-product-body">
                     <h4>{product.nombre}</h4>
-                    <h5 style={{color:"red"}}>S/ {product.precio}</h5>
+                    <h5 style={{color:"red"}}>S/ {parseFloat(product.precio).toFixed(2)}</h5>
                     <p className="m-0">
                         {product.descripcion}
                     </p>

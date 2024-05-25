@@ -7,10 +7,11 @@ import {Button} from "primereact/button";
 import {SpinnerDialog} from "../../../../shared/components/SpinnerDialog.jsx";
 import {NavDialog} from "../../../../shared/components/NavDialog.jsx";
 import {StepperCredito} from "./StepperCredito.jsx";
+import {StepperProvider} from "../context/StepperProvider.jsx";
 
 
 // eslint-disable-next-line react/prop-types
-export function NewCreditDialog({visible,onClose}){
+export function NewCreditDialog({visible, onClose}) {
     const encabezado = (
         <>
             <h3>Nuevo crédito</h3>
@@ -21,7 +22,7 @@ export function NewCreditDialog({visible,onClose}){
         <>
         </>
     );
-    return(
+    return (
         <>
             <Dialog
                 header={encabezado}
@@ -30,10 +31,12 @@ export function NewCreditDialog({visible,onClose}){
                 onHide={onClose}
                 closable={true}
                 draggable={false}
-                style={{width: '90%', backgroundColor:"white"}}
+                style={{width: '100%', backgroundColor: "white"}}
                 maximized={true}
             >
-                <StepperCredito></StepperCredito>
+                <StepperProvider>
+                    <StepperCredito></StepperCredito>
+                </StepperProvider>
             </Dialog>
         </>
     )

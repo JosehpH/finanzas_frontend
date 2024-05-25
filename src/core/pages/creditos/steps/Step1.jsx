@@ -3,7 +3,7 @@ import {ListBox} from "primereact/listbox";
 import {useStep1} from "../custom-hooks/useStep1.js";
 import {SpinnerDialog} from "../../../../shared/components/SpinnerDialog.jsx";
 import {useEffect, useState} from "react";
-import {CardClientStep1} from "../components/CardClientStep1.jsx";
+import {CardClientStep1} from "../components/step1/CardClientStep1.jsx";
 
 export function Step1(){
     const {loading,searchClientByDni,clienteSelect} = useStep1()

@@ -2,8 +2,8 @@ import {Dropdown} from "primereact/dropdown";
 import {useContext, useState} from "react";
 import {SpinnerDialog} from "../../../../shared/components/SpinnerDialog.jsx";
 import {StepperContext} from "../context/StepperContext.jsx";
-import {AnualidadesForm} from "../components/forms/AnualidadesForm.jsx";
-import {ValorFuturoForm} from "../components/forms/ValorFuturoForm.jsx";
+import {AnualidadesForm} from "../components/step3/AnualidadesForm.jsx";
+import {ValorFuturoForm} from "../components/step3/ValorFuturoForm.jsx";
 
 export function Step3() {
     const {tipoCredito,setTipoCredito}=useContext(StepperContext)
