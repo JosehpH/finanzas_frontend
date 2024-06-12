@@ -18,6 +18,8 @@ export function VistaCreditoValorFuturo({creditoData}){
             interesCompensatorioMora:"S/"+parseFloat(creditoData?.cuota.interesCompensatorioMora).toFixed(2),
             interesMoratorio:"S/"+parseFloat(creditoData?.cuota.interesMoratorio).toFixed(2),
             monto:"S/"+parseFloat(creditoData?.cuota.monto).toFixed(2),
+            saldoFinal: "S/" + parseFloat(creditoData?.saldoRestante-creditoData?.cuota.amortizacion).toFixed(2),
+            saldoInicial: "S/" + parseFloat(creditoData?.saldoRestante).toFixed(2),
 
         }
     ]
@@ -53,14 +55,15 @@ export function VistaCreditoValorFuturo({creditoData}){
                 <Column field="periodo" header="Periodo de la tasa"></Column>
                 <Column field="periodoCapitalizacion" header="Periodo de capitalización"></Column>
             </DataTable>
-            <h3 className="mt-5">Cuotas</h3>
+            <h3 className="mt-5">PLAN DE PAGOS</h3>
             <DataTable value={cuotas} responsiveLayout="stack"  tableStyle={{ minWidth: '2rem'}}>
                 <Column field="numeroCuota" header="Número de cuota" style={{fontWeight:"bold", backgroundColor:"red",color:"white"}}></Column>
-                <Column field="amortizacion" header="Amortización"></Column>
+                <Column field="saldoInicial" header="Saldo Inicial"></Column>
                 <Column field="interesCompensatorio" header="Interés compensatorio"></Column>
                 <Column field="interesCompensatorioMora" header="Interés compensatorio mora"></Column>
                 <Column field="interesMoratorio" header="Interés moratorio"></Column>
-                <Column field="monto" header="Monto a pagar"></Column>
+                <Column field="amortizacion" header="Amortización"></Column>
+                <Column field="monto" header="Cuota"></Column>
                 <Column field="fechaVencimiento" header="Fecha de vencimiento"></Column>
                 <Column field="estadoCuota" header="Estado de pago"></Column>
             </DataTable>

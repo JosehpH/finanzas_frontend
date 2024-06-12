@@ -1,27 +1,34 @@
 .card-client{
     display:flex;
-    flex-direction:row;
     width:100%;
+    flex-direction:column;
     min-height:150px;
     justify-content:center;
-    background-color:wheat;
+    align-items:center;
+    background-color:rgba(255,255,255,0.2);
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra negra difusa hacia abajo */
     border-radius:10px;
-    padding:5px;
+    padding:5px 20px;
     gap:5px;
 }
 
 .client-container{
+    padding:15px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
     width:100%;
 }
 .card-client-body{
-    width:90%;
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
-    gap:15px;
-    align-self:center;
+    display:flex;
+    flex-wrap:wrap;
 }
 .card-client-body div{
-    width:100%;
+    display:flex;
+    margin: 10px;
+    flex: 1 1 auto; /* Define cómo se deben distribuir los elementos flexibles */
+    min-width: 0;
 }
 .detalles-credito-container{
     width:100%;
@@ -31,4 +38,27 @@
     display:flex;
     flex-direction:column;
     align-items:center;
+}
+.label-header{
+    font-weight: bold;
+}
+.label-body{
+
+}
+.dato-container{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:start;
+}
+.datos-container{
+    display:flex;
+    flex-wrap:wrap;
+    background-color:ghostwhite;
+    padding:15px 25px;
+    border-radius:15px;
+}
+.perfil-cliente{
+    display:flex;
+    flex-direction:column;
 }

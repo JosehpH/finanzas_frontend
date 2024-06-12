@@ -11,22 +11,16 @@ import {SpinnerDialog} from "../../../../shared/components/SpinnerDialog.jsx";
 import {OrderItem} from "../../creditos/components/step2/OrderItem.jsx";
 import {useParams} from "react-router-dom";
 
-export function Cuenta() {
+// eslint-disable-next-line react/prop-types
+export function Cuenta({customerId}) {
     const {orden, cuenta, http, state} = useCuenta();
     const [showDetalles, setShowDetalles] = useState(false);
     const [showOrden, setShowOrden] = useState(false);
     const [creditoSelected, setCreditoSelected] = useState(null);
-    const {customerId} = useParams();
 
     useEffect(() => {
         http.getCuenta(customerId);
     }, [])
-    const encabezado = (
-        <>
-            <h3>Cuenta: test </h3>
-            <hr/>
-        </>
-    );
     const creditoHeader = cuenta?.creditos?.map((e, index) => ({
         id: e.id,
         tipoCredito: e.tipoCredito,
@@ -60,7 +54,7 @@ export function Cuenta() {
     }
     return (
         <div className="w-full mt-5 pl-5 pr-5">
-            <h3>Límite crediticio: S/ {cuenta?.limiteCrediticio}</h3>
+            <div>Límite crediticio: <strong style={{color:"red"}}>S/ {cuenta?.limiteCrediticio}</strong></div>
             <h4>Creditos</h4>
             <DataTable value={creditoHeader} responsiveLayout="stack"
                        tableStyle={{minWidth: '2rem'}}>

@@ -3,8 +3,8 @@ import {BASE_PATH} from "../../../../shared/constants/ApiFinanzas.js";
 import {Contexto} from "../../../../auth/context/Contexto.jsx";
 import axios from "axios";
 
-export function useClient(){
-    const [clientRequest,setClientRequest] = useState({
+export function useClient() {
+    const [clientRequest, setClientRequest] = useState({
         nombres: "",
         apellidoPaterno: "",
         apellidoMaterno: "",
@@ -12,37 +12,37 @@ export function useClient(){
         email: "",
         telefono: "",
     })
-    const [aperturarCuentaRequest,setAperturarCuentaRequest] = useState(
+    const [aperturarCuentaRequest, setAperturarCuentaRequest] = useState(
         {
-            limiteCrediticio:0
+            limiteCrediticio: 0
         }
     )
-    const setNombre = (value)=>setClientRequest((prev)=>({
+    const setNombre = (value) => setClientRequest((prev) => ({
         ...prev,
         nombres: value
     }))
-    const setApellidoPaterno = (value)=>setClientRequest((prev)=>({
+    const setApellidoPaterno = (value) => setClientRequest((prev) => ({
         ...prev,
         apellidoPaterno: value
     }))
-    const setApellidoMaterno = (value)=>setClientRequest((prev)=>({
+    const setApellidoMaterno = (value) => setClientRequest((prev) => ({
         ...prev,
         apellidoMaterno: value
     }))
-    const setDni = (value)=>setClientRequest((prev)=>({
+    const setDni = (value) => setClientRequest((prev) => ({
         ...prev,
         dni: value
     }))
-    const setEmail = (value)=>setClientRequest((prev)=>({
+    const setEmail = (value) => setClientRequest((prev) => ({
         ...prev,
         email: value
     }))
-    const setTelefono = (value)=>setClientRequest((prev)=>({
+    const setTelefono = (value) => setClientRequest((prev) => ({
         ...prev,
         telefono: value
     }))
 
-    const setLimiteCrediticio = (value)=>setAperturarCuentaRequest((prev)=>({
+    const setLimiteCrediticio = (value) => setAperturarCuentaRequest((prev) => ({
         limiteCrediticio: value
     }))
     const setters = {
@@ -57,6 +57,7 @@ export function useClient(){
 
 
     const [clientes, setClients] = useState([])
+    const [perfil, setPerfil] = useState(null)
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -66,19 +67,20 @@ export function useClient(){
         headers: {Authorization: `Bearer ${token}`}
     };
 
-    const postClient=()=>{
+    const postClient = () => {
         setLoading(true)
-        axios.post(resource,clientRequest,config).then((e)=>{
+        axios.post(resource, clientRequest, config).then((e) => {
             setLoading(false)
             setSuccess(true)
             getAllClients()
-        }).catch((e)=>{
+        }).catch((e) => {
             setLoading(false)
         })
     }
-    const getAllClients=()=>{
+    const getAllClients = () => {
+        const url = `${BASE_PATH}/api/clientes/negocio`
         setLoading(true)
-        axios.get(resource, config).then((e) => {
+        axios.get(url, config).then((e) => {
             setClients(e.data)
             console.log(e)
             setLoading(false)
@@ -88,9 +90,9 @@ export function useClient(){
         })
     }
 
-    const aperturarCuenta=(clienteId)=>{
+    const aperturarCuenta = (clienteId) => {
         setLoading(true)
-        axios.post(`${resource}/${clienteId}/aperturar-cuenta`,aperturarCuentaRequest, config).then((e) => {
+        axios.post(`${resource}/${clienteId}/aperturar-cuenta`, aperturarCuentaRequest, config).then((e) => {
             setLoading(false)
             getAllClients()
             setSuccess(true)
@@ -102,16 +104,33 @@ export function useClient(){
     }
     const searchClient = (keyword) => {
         const ruta = `${resource}/search`
-        const configs = {...config,params:{keyword:keyword}}
+        const configs = {...config, params: {keyword: keyword}}
         setLoading(true);
-        axios.get(ruta,configs).then((e)=>{
+        axios.get(ruta, configs).then((e) => {
             setLoading(false)
             setClients(e.data)
-        }).catch((e)=>{
+        }).catch((e) => {
             setLoading(false)
             alert(e)
         })
     }
 
-    return {clientes,setters, estado:{loading,success,setSuccess}, http:{postClient,getAllClients,aperturarCuenta,searchClient}}
+    const getClientById = (id) => {
+        let cliente = null
+        setLoading(true)
+        axios.get(`${resource}/${id}`, config).then((e) => {
+            setPerfil(e.data)
+            setLoading(false);
+        }).catch((e) => {
+            setLoading(false)
+        })
+        return cliente
+    }
+    return {
+        perfil,
+        clientes,
+        setters,
+        estado: {loading, success, setSuccess},
+        http: {postClient, getAllClients, aperturarCuenta, searchClient, getClientById}
+    }
 }

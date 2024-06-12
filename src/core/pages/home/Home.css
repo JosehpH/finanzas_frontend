@@ -1,0 +1,47 @@
+.estadistica{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-around;
+    border-radius:20px;
+    background-color:ghostwhite;
+    min-height: 150px;
+    padding:30px;
+    box-shadow: lightslategray 1px 1px ;
+    cursor:pointer;
+    margin-top:5px;
+}
+.estadistica:hover{
+    background-color:floralwhite;
+}
+.container-bienvenida{
+    min-width:250px;
+    font-size: 1.9em;
+}
+.estadistica-title{
+    font-size: 1.2em;
+}
+.estadistica-body{
+    font-weight: bold;
+    font-size: 1.8em;
+}
+.productos-populares-container{
+    min-height:200px;
+    min-width:80%;
+    background-color:ghostwhite;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:10px;
+}
+.productos-populares-title{
+    font-size: 1.2em;
+
+}
+.inicio, .perfil{
+    background-image: url("src/assets/fondo2.png");
+    background-size: cover; /* Asegura que la imagen cubra todo el div */
+    background-position: center; /* Centra la imagen en el div */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}

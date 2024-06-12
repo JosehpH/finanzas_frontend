@@ -53,6 +53,7 @@ export function AddCuentaDialog({visible, onSend,setters,loading,success,onClose
                         route={null}
                         onClick={() => {
                             successToFalse();
+                            window.location.reload()
                             onClose();
                         }}
                     />

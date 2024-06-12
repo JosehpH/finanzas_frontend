@@ -8,12 +8,12 @@ export function CardClientStep1({cliente}){
                 <Avatar icon="pi pi-user" size="xlarge"/>
             </div>
             <div className="card-client-body">
-                <div><strong>DNI: </strong>{cliente.dni}</div>
-                <div><strong>Nombres: </strong>{cliente.nombres}</div>
-                <div><strong>Aperllido paterno: </strong>{cliente.apellidoPaterno} </div>
-                <div><strong>Apellido materno: </strong>{cliente.apellidoMaterno} </div>
-                <div><strong>Email: </strong>{cliente.email}</div>
-                <div><strong>Télefono: </strong>{cliente.telefono} </div>
+                <div><strong className="mr-1">DNI: </strong> {cliente.dni}</div>
+                <div><strong className="mr-1">Nombres: </strong> {cliente.nombres}</div>
+                <div><strong className="mr-1">Aperllido paterno: </strong> {cliente.apellidoPaterno} </div>
+                <div><strong className="mr-1">Apellido materno: </strong> {cliente.apellidoMaterno} </div>
+                <div><strong className="mr-1">Email: </strong> {cliente.email}</div>
+                <div><strong className="mr-1">Télefono: </strong> {cliente.telefono} </div>
             </div>
         </div>
     );

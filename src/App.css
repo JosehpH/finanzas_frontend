@@ -1,7 +1,7 @@
 .page{
     width:100%;
-    height: calc(100vh - 60px);
-    background-color: whitesmoke;
+    margin-top:60px;
+    min-height: calc(100vh - 60px);
 }
 .header-page-container{
     width:90%;
@@ -10,4 +10,9 @@
 td{
     margin:0;
     padding:5px 10px;
+}
+.perfil-form{
+    background-color: ghostwhite;
+    max-width:95%;
+    border-radius: 10px;
 }

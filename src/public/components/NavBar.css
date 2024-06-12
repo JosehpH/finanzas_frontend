@@ -1,14 +1,25 @@
 .nav-bar{
     height:60px;
-    background-color:orange;
+    width:100%;
+    background-color:ghostwhite;
+    position:fixed;
+    z-index:5000;
 }
 .img-nav-bar{
     background-color:red;
     border-radius:10px;
 }
 .menu-bar{
-    background-color:gold;
+    background-color:ghostwhite;
 }
 .menu-bar ul li{
     color:black;
+}
+.botones-nav{
+    font-size:1.3em;
+    cursor:pointer;
+    margin-top:15px;
+}
+.botones-nav:hover{
+    background-color:yellow;
 }

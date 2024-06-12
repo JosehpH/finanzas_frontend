@@ -80,7 +80,7 @@ export function VistaCreditoAnualidades({creditoData}) {
                 <Column field="interesCompensatorio" header="Interés compensatorio (S/)"></Column>
                 <Column field="interesCompensatorioMora" header="Interés compensatorio mora (S/)"></Column>
                 <Column field="interesMoratorio" header="Interés moratorio (S/)"></Column>
-                <Column field="monto" header="Monto a pagar (S/)"></Column>
+                <Column field="monto" header="Cuota (S/)"></Column>
                 <Column field="fechaVencimiento" header="Fecha de vencimiento"></Column>
                 <Column field="estadoCuota" header="Estado de pago"></Column>
             </DataTable>
