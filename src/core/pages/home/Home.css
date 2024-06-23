@@ -40,8 +40,16 @@
 
 }
 .inicio, .perfil{
-    background-image: url("src/assets/fondo2.png");
+    background-image: url("src/assets/fondo.png");
     background-size: cover; /* Asegura que la imagen cubra todo el div */
     background-position: center; /* Centra la imagen en el div */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+.inicio::after, .perfil::before {
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Color negro semitransparente */
 }

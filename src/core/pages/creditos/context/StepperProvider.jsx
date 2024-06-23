@@ -52,6 +52,11 @@ export function StepperProvider({children}){
     });
     const [orden,setOrden] = useState(null)
     const [ordenLocal,setOrdenLocal] = useState([])
+    const [disableCapitalizacion,setDisableCapitalizacion] = useState(false)
+    const [disableCapitalizacion2,setDisableCapitalizacion2] = useState(false)
+    const [disableCapitalizacion3,setDisableCapitalizacion3] = useState(false)
+    const [disableCapitalizacion4,setDisableCapitalizacion4] = useState(false)
+
     return(
         <StepperContext.Provider value={
             {
@@ -68,7 +73,15 @@ export function StepperProvider({children}){
                 ordenLocal,
                 setOrdenLocal,
                 checked,
-                setChecked
+                setChecked,
+                disableCapitalizacion,
+                setDisableCapitalizacion,
+                disableCapitalizacion2,
+                setDisableCapitalizacion2,
+                disableCapitalizacion3,
+                setDisableCapitalizacion3,
+                disableCapitalizacion4,
+                setDisableCapitalizacion4
             }
         }>
             {children}

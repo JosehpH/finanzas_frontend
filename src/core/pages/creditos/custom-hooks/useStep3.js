@@ -52,10 +52,11 @@ export function useStep3(){
     }
     const vistaPreviaAnualidades = (body) =>{
         const ruta = `${BASE_PATH}/api/creditos/anualidades`;
+        console.log("Enviando: ",body)
         //setLoading(true);
         axios.post(ruta,body,{...config,timeout:5000}).then((e)=>{
             //setLoading(false);
-            console.log(e);
+            console.log("Recibiendo:",e.data);
             setCreditoData(e.data);
         }).catch((e)=>{
             //setLoading(false);

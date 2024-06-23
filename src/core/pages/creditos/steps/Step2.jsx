@@ -39,29 +39,35 @@ export function Step2() {
             return updatedOrden;
         });
     };
-
+    const ordenList = ()=>{
+        if(orden==null || orden.items.length===0)
+            return (<div style={{textAlign:"center"}}>La orden está vacía, agrega productos</div>)
+        else
+            return(
+                orden?.items?.map((item, index) => (
+                    <OrderItem item={item} key={index} deleteItem={removeProductoFromOrden}></OrderItem>))
+            )
+    }
     return (
         <div className="container-step2 w-full">
             <SearchBar placeholder="Buscar producto" onSearch={http.searchProducts}></SearchBar>
-            <div className="flex flex-column md:flex-row lg:flex-row xl:flex-row justify-content-around">
-                <div className="step2-productos-search flex flex-column mt-2 w-20rem">
+            <div className="flex flex-column w-full md:flex-row lg:flex-row xl:flex-row justify-content-around">
+                <div className="step2-productos-search flex flex-column mt-2">
                     {products.map((product, index) => (<ProductCardOrden key={index} product={product}
                                                                          addProductoToOrden={addProductoToOrden}></ProductCardOrden>))}
                 </div>
-                { orden?.items != null  &&
-                    (<div className="cart-products flex flex-column w-25rem">
+                {(<div className="cart-products flex flex-column w-25rem justify-content-between">
                     <div className="header-cart">
                         <h3>Orden <i className="pi pi-shopping-cart"></i></h3>
                         <hr/>
                     </div>
                     <div className="body-cart">
                         {
-                            orden?.items?.map((item, index) => (
-                                <OrderItem item={item} key={index} deleteItem={removeProductoFromOrden}></OrderItem>))
+                           ordenList()
                         }
                     </div>
                     <div className="footer-cart" style={{fontWeight: "bold"}}><strong
-                        className="mr-3">Total: </strong> S/ {parseFloat(orden?.total).toFixed(2)}</div>
+                        className="mr-3">Total: </strong> S/ {parseFloat(orden==null?0:orden.total).toFixed(2)}</div>
                 </div>
                     )}
                 <SpinnerDialog loading={state.loading}></SpinnerDialog>

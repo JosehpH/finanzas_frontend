@@ -10,14 +10,16 @@ import {Step4} from "../../creditos/steps/Step4.jsx";
 import {SpinnerDialog} from "../../../../shared/components/SpinnerDialog.jsx";
 import {OrderItem} from "../../creditos/components/step2/OrderItem.jsx";
 import {useParams} from "react-router-dom";
-
+import {InputText} from "primereact/inputtext";
+import {NavDialog} from "../../../../shared/components/NavDialog.jsx";
+import 'jspdf-autotable'; // Si necesitas tablas u otras funcionalidades
 // eslint-disable-next-line react/prop-types
 export function Cuenta({customerId}) {
     const {orden, cuenta, http, state} = useCuenta();
     const [showDetalles, setShowDetalles] = useState(false);
     const [showOrden, setShowOrden] = useState(false);
     const [creditoSelected, setCreditoSelected] = useState(null);
-
+    const [showEdit, setShowEdit] = useState(false);
     useEffect(() => {
         http.getCuenta(customerId);
     }, [])
@@ -34,7 +36,7 @@ export function Cuenta({customerId}) {
         return (
             <div className="flex w-full flex-row justify-content-around">
                 <Button
-                    style={{backgroundColor:"white",border:" 2px solid blue",color:"blue"}}
+                    style={{backgroundColor: "white", border: " 2px solid blue", color: "blue"}}
                     icon="pi pi-file"
                     label="Ver detalles"
                     onClick={() => {
@@ -42,19 +44,70 @@ export function Cuenta({customerId}) {
                         setShowDetalles(true);
                     }}></Button>
                 <Button
-                    style={{backgroundColor:"white",border:" 2px solid green",color:"green"}}
+                    style={{backgroundColor: "white", border: " 2px solid green", color: "green"}}
                     icon="pi pi-shopping-cart"
                     label="Ver orden"
                     onClick={() => {
-                    http.getOrden(credito.id);
-                    setShowOrden(true);
-                }}></Button>
+                        http.getOrden(credito.id);
+                        setShowOrden(true);
+                    }}></Button>
             </div>
         )
     }
+    const EditMode = (props) => {
+        // eslint-disable-next-line react/prop-types
+        const [campoUpdate, setCampoUpdate] = useState(props.value)
+        // eslint-disable-next-line react/prop-types
+        if (!props.editMode) {
+            // eslint-disable-next-line react/prop-types
+            return props.children
+        }
+        return (
+            <div className="flex flex-row gap-2">
+                <InputText id="nombre" value={campoUpdate}
+                           onChange={(e) => setCampoUpdate(e.target.value)}
+                />
+                <div>
+                    {/* eslint-disable-next-line react/prop-types */}
+                    <Button icon="pi pi-save" severity="success" onClick={() => {
+                        props.onSave(campoUpdate)
+                    }}></Button>
+                </div>
+                <div>
+                    {/* eslint-disable-next-line react/prop-types */}
+                    <Button icon="pi pi-times" severity="danger" onClick={props.onCancel}></Button>
+                </div>
+            </div>
+        )
+    }
+
     return (
-        <div className="w-full mt-5 pl-5 pr-5">
-            <div>Límite crediticio: <strong style={{color:"red"}}>S/ {cuenta?.limiteCrediticio}</strong></div>
+        <div id="cuenta-page" className="w-full mt-5 pl-5 pr-5">
+            <div className="dato-container flex">
+                <div className="label-header">
+                    Límite crediticio:
+                </div>
+                <div className="label-body flex flex-row align-items-center gap-2">
+                    <EditMode editMode={showEdit} value={cuenta?.limiteCrediticio} onCancel={() => setShowEdit(false)}
+                              onSave={(value) => http.updateLineaCredito(customerId, value)}
+                    >
+                        <div><strong style={{color: "red"}}>S/ {cuenta?.limiteCrediticio}</strong>
+                        </div>
+                        <div className="card flex justify-content-center">
+                            <Button icon="pi pi-pencil" size="small" onClick={() => setShowEdit(true)}/>
+                        </div>
+                    </EditMode>
+                </div>
+            </div>
+            <div className="dato-container flex">
+                <div className="label-header">
+                    Intereses acumulados:
+                </div>
+                <div className="label-body" >
+                    S/ {cuenta?.interesAcumulado}
+                </div>
+            </div>
+
             <h4>Creditos</h4>
             <DataTable value={creditoHeader} responsiveLayout="stack"
                        tableStyle={{minWidth: '2rem'}}>
@@ -97,6 +150,17 @@ export function Cuenta({customerId}) {
                 </div>
             </Dialog>
             <SpinnerDialog loading={state.loading}></SpinnerDialog>
+            <NavDialog
+                success={state.success}
+                message="Se han guardado los cambios correctamente"
+                color="green"
+                icono="pi pi-check-circle"
+                onClick={() => {
+                    state.setSuccess(false)
+                    window.location.reload()
+                }}
+            >
+            </NavDialog>
         </div>
     );
 }

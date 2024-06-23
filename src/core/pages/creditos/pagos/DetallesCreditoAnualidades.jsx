@@ -1,8 +1,21 @@
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Button} from "primereact/button";
+import {useState} from "react";
+import {DialogPagar} from "./DialogPagar.jsx";
+import {SpinnerDialog} from "../../../../shared/components/SpinnerDialog.jsx";
+import {DetallesPago} from "./DetallesPago.jsx";
+import {useExportFile} from "../../../../shared/custom-hooks/useExportFile.js";
 
-export function VistaCreditoAnualidades({creditoData}) {
+export function DetallesCreditoAnualidades({creditoData, clienteId}) {
+    const [pagarDialogVisible, setPagarDialogVisible] = useState(false)
+    const [detallesPagoDialogVisible, setDetallesPagoDialogVisible] = useState(false)
+    // eslint-disable-next-line react/prop-types
+    const [creditoId,setCreditoId] = useState(creditoData?.id)
+    const [cuotaId,setCuotaId] = useState(null)
+    const [cuotaSelected,setCuotaSelected] = useState(null)
+    const {exportExcel,exportPdf} = useExportFile()
+
     const termino = [{
         tipoCredito: creditoData?.tipoCredito,
         saldo:"S/"+parseFloat(creditoData?.saldo).toFixed(2),
@@ -46,11 +59,40 @@ export function VistaCreditoAnualidades({creditoData}) {
         }
         return response;
     }
-    const pagoTemplate = ()=>{
+    const pagoTemplate = (cuota)=>{
+        if(cuota.estadoCuota==="PAGADA")
+            return(
+                <div>
+                    <Button label="Ver detalles pago" icon="pi pi-eye" onClick={()=>{
+                        setCuotaSelected(cuota)
+                        setDetallesPagoDialogVisible(true)
+                    }}></Button>
+                </div>
+            )
         return(
-            <Button label="Pagar"></Button>
+            <Button label="Pagar" onClick={()=> {
+                setCuotaId(cuota.id)
+                setCreditoId(creditoData.id)
+                setPagarDialogVisible(true)
+            }}
+            >
+            </Button>
         )
     }
+    const cols = [
+        { field: 'numeroCuota', header: 'Número de cuota' },
+        { field: 'amortizacion', header: 'Amortización' },
+        { field: 'interesCompensatorio', header: 'Interés compensatorio' },
+        { field: 'interesMoratorio', header: 'Interés moratorio' },
+        { field: 'monto', header: 'Cuota' },
+        { field: 'fechaVencimiento', header: 'Fecha de vencimiento' },
+        { field: 'estadoCuota', header: 'Estado de pago' }
+    ];
+    const headerTable = (
+        <div className="flex align-items-center justify-content-end gap-2">
+            <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={()=>{exportPdf(cols,cuotas)}} data-pr-tooltip="PDF" />
+        </div>
+    );
     return (
         <div className="w-full">
             <DataTable value={termino} responsiveLayout="stack"  tableStyle={{ minWidth: '2rem'}}>
@@ -80,7 +122,7 @@ export function VistaCreditoAnualidades({creditoData}) {
                 <Column field="saldoRestante" header="Saldo restante"></Column>
             </DataTable>
             <h3 className="mt-5">Plan de pagos</h3>
-            <DataTable value={cuotas} responsiveLayout="stack"  tableStyle={{ minWidth: '2rem'}}>
+            <DataTable header={headerTable} value={cuotas} responsiveLayout="stack"  tableStyle={{ minWidth: '2rem'}}>
                 <Column field="numeroCuota" header="Número de cuota" style={{fontWeight:"bold", backgroundColor:"red",color:"white"}}></Column>
                 <Column field="amortizacion" header="Amortización (S/)"></Column>
                 <Column field="interesCompensatorio" header="Interés compensatorio (S/)"></Column>
@@ -89,7 +131,22 @@ export function VistaCreditoAnualidades({creditoData}) {
                 <Column field="monto" header="Cuota (S/)"></Column>
                 <Column field="fechaVencimiento" header="Fecha de vencimiento"></Column>
                 <Column field="estadoCuota" header="Estado de pago"></Column>
+                <Column header="Pago" body={pagoTemplate}></Column>
             </DataTable>
+            <DialogPagar onHide={()=>setPagarDialogVisible(false)}
+                         visible={pagarDialogVisible}
+                         clienteId={clienteId}
+                         creditoId={creditoId}
+                         cuotaId={cuotaId}
+            />
+            <DetallesPago
+                onHide={()=>setDetallesPagoDialogVisible(false)}
+                visible={detallesPagoDialogVisible}
+                fechaPago={cuotaSelected?.fechaPago}
+                metodoPago={cuotaSelected?.metodoPago}
+                montoPagado={cuotaSelected?.montoPagado}
+            >
+            </DetallesPago>
         </div>
     );
 }

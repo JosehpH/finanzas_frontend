@@ -24,6 +24,7 @@
 }
 .step2-productos-search{
     max-height:300px;
+    min-width:450px;
     overflow-y:auto;
 }
 .footer-cart{

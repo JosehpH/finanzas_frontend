@@ -9,6 +9,14 @@ export function Home(){
         http.getInfoNegocio()
     },[])
 
+    const productosTemplate = ()=> (
+        <div className="productos-populares-container mt-5">
+            <div className="productos-populares-title">Productos más vendidos</div>
+            <div className="productos-populares-body">
+
+            </div>
+        </div>
+    )
     return (
         <div className="page inicio flex w-full flex-column align-items-center justify-content-around">
             <div className="container-bienvenida flex w-full flex-column align-items-center">
@@ -52,12 +60,7 @@ export function Home(){
                     </div>
                 </div>
             </div>
-            <div className="productos-populares-container mt-5">
-                <div className="productos-populares-title">Productos más vendidos</div>
-                <div className="productos-populares-body">
 
-                </div>
-            </div>
             <SpinnerDialog loading={state.loading}></SpinnerDialog>
         </div>
     )

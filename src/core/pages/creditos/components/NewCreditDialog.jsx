@@ -13,10 +13,10 @@ import {StepperProvider} from "../context/StepperProvider.jsx";
 // eslint-disable-next-line react/prop-types
 export function NewCreditDialog({visible, onClose}) {
     const encabezado = (
-        <>
+        <div className="mt-6">
             <h3>Nuevo crédito</h3>
             <hr/>
-        </>
+        </div>
     );
     const footer = (
         <>
@@ -31,7 +31,7 @@ export function NewCreditDialog({visible, onClose}) {
                 onHide={onClose}
                 closable={true}
                 draggable={false}
-                style={{width: '100%', backgroundColor: "white"}}
+                style={{width: '100%',backgroundColor: "white"}}
                 maximized={true}
             >
                 <StepperProvider>

@@ -126,11 +126,24 @@ export function useClient() {
         })
         return cliente
     }
+    const editCampoById = (clienteId, campo,nombreCampo)=>{
+        const ruta = (`${resource}/${nombreCampo}/${clienteId}`)
+        setLoading(true)
+        axios.patch(ruta,{[nombreCampo]:campo},config).then((e)=>{
+            setLoading(false)
+            setSuccess(true)
+        }).catch((e)=>{
+            setLoading(false)
+            console.log("Ruta: ",ruta)
+            console.log("Error: ",e)
+            alert("Ha ocurrido un error")
+        })
+    }
     return {
         perfil,
         clientes,
         setters,
         estado: {loading, success, setSuccess},
-        http: {postClient, getAllClients, aperturarCuenta, searchClient, getClientById}
+        http: {postClient, getAllClients, aperturarCuenta, searchClient, getClientById,editCampoById}
     }
 }

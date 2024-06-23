@@ -6,10 +6,11 @@ import {FloatLabel} from "primereact/floatlabel";
 import {Dropdown} from "primereact/dropdown";
 import {useContext, useState} from "react";
 import {StepperContext} from "../../context/StepperContext.jsx";
-import {InputCalendario} from "./InputCalendario.jsx";
+import {InputCalendario} from "../../../../../shared/components/InputCalendario.jsx";
 
 export function ValorFuturoForm() {
-    const {valorFuturoForm, setValorFuturoForm} = useContext(StepperContext);
+    const {valorFuturoForm, setValorFuturoForm,disableCapitalizacion3,setDisableCapitalizacion3,
+        disableCapitalizacion4,setDisableCapitalizacion4} = useContext(StepperContext);
     const [pagoInicial,setPagoInicial] = useState(valorFuturoForm.pagoInicial);
     const [tasaC,setTasaC] = useState(valorFuturoForm.tasaCompensatoria.tasa);
     const [tasaM,setTasaM] = useState(valorFuturoForm.tasaMoratoria.tasa);
@@ -109,6 +110,13 @@ export function ValorFuturoForm() {
                             value={{name: valorFuturoForm.tasaCompensatoria.tipo}}
                             onChange={(e) => {
                                 let formCopy = {...valorFuturoForm}
+                                if(e.value.name==="EFECTIVA"){
+                                    setDisableCapitalizacion3(true)
+                                    formCopy.tasaCompensatoria.periodoCapitalizacion = null
+                                }else if(e.value.name==="NOMINAL"){
+                                    setDisableCapitalizacion3(false)
+                                    formCopy.tasaCompensatoria.periodoCapitalizacion = "DIARIO"
+                                }
                                 formCopy.tasaCompensatoria.tipo = e.value.name
                                 console.log(formCopy)
                                 setValorFuturoForm(formCopy)
@@ -134,6 +142,7 @@ export function ValorFuturoForm() {
                         <label htmlFor="periodo-capitalizacion">Periodo de capitalizacion</label>
                         <Dropdown
                             id="periodo-capitalizacion"
+                            disabled={disableCapitalizacion3}
                             value={{name: valorFuturoForm.tasaCompensatoria.periodoCapitalizacion}}
                             onChange={(e) => {
                                 let formCopy = {...valorFuturoForm}
@@ -176,6 +185,13 @@ export function ValorFuturoForm() {
                             value={{name: valorFuturoForm.tasaMoratoria.tipo}}
                             onChange={(e) => {
                                 let formCopy = {...valorFuturoForm}
+                                if(e.value.name==="EFECTIVA"){
+                                    setDisableCapitalizacion4(true)
+                                    formCopy.tasaMoratoria.periodoCapitalizacion = null
+                                }else if(e.value.name==="NOMINAL"){
+                                    setDisableCapitalizacion4(false)
+                                    formCopy.tasaMoratoria.periodoCapitalizacion = "DIARIO"
+                                }
                                 formCopy.tasaMoratoria.tipo = e.value.name
                                 console.log(formCopy)
                                 setValorFuturoForm(formCopy)
@@ -201,6 +217,7 @@ export function ValorFuturoForm() {
                         <label htmlFor="periodo-capitalizacion">Periodo de capitalizacion</label>
                         <Dropdown
                             id="periodo-capitalizacion"
+                            disabled={disableCapitalizacion4}
                             value={{name: valorFuturoForm.tasaMoratoria.periodoCapitalizacion}}
                             onChange={(e) => {
                                 let formCopy = {...valorFuturoForm}

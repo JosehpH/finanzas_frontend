@@ -6,16 +6,18 @@ import {FloatLabel} from "primereact/floatlabel";
 import {Dropdown} from "primereact/dropdown";
 import {useContext, useState} from "react";
 import {StepperContext} from "../../context/StepperContext.jsx";
-import {InputCalendario} from "./InputCalendario.jsx";
+import {InputCalendario} from "../../../../../shared/components/InputCalendario.jsx";
 import {InputSwitch} from "primereact/inputswitch";
 
 export function AnualidadesForm() {
-    const {anualidadForm, setAnualidadForm, checked,setChecked} = useContext(StepperContext);
+    const {anualidadForm, setAnualidadForm, checked,setChecked, disableCapitalizacion,setDisableCapitalizacion,
+        disableCapitalizacion2,setDisableCapitalizacion2} = useContext(StepperContext);
     const [pagoInicial,setPagoInicial] = useState(anualidadForm.pagoInicial);
     const [tasaC,setTasaC] = useState(anualidadForm.tasaCompensatoria.tasa);
     const [tasaM,setTasaM] = useState(anualidadForm.tasaMoratoria.tasa);
     const [numCuotas, setNumCuotas] = useState(anualidadForm.numCuotas);
     const [numCuotasGracia, setNumCuotasGracia] = useState(anualidadForm.gracia.numCuotas);
+
     const tiposTasa = [
         {name: 'EFECTIVA'},
         {name: 'NOMINAL'},
@@ -203,11 +205,18 @@ export function AnualidadesForm() {
                             onChange={(e) => {
                                 let formCopy = {...anualidadForm}
                                 formCopy.tasaCompensatoria.tipo = e.value.name
-                                console.log(formCopy)
+                                if(e.value.name==="EFECTIVA"){
+                                    setDisableCapitalizacion(true)
+                                    formCopy.tasaCompensatoria.periodoCapitalizacion = null
+                                }else if(e.value.name==="NOMINAL"){
+                                    setDisableCapitalizacion(false)
+                                    formCopy.tasaCompensatoria.periodoCapitalizacion = "DIARIO"
+                                }
+                                console.log(e.value)
                                 setAnualidadForm(formCopy)
                             }}
                             options={tiposTasa} optionLabel="name"
-                            placeholder="Tipo de crédito" className="w-full md:w-14rem"/>
+                            placeholder="Tipo de tasa" className="w-full md:w-14rem"/>
                     </div>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="periodo-tasa">Periodo de la tasa</label>
@@ -221,11 +230,12 @@ export function AnualidadesForm() {
                                 setAnualidadForm(formCopy)
                             }}
                             options={tipoPeriodo} optionLabel="name"
-                            placeholder="Tipo de crédito" className="w-full md:w-14rem"/>
+                            placeholder="periodo" className="w-full md:w-14rem"/>
                     </div>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="periodo-capitalizacion">Periodo de capitalizacion</label>
                         <Dropdown
+                            disabled={disableCapitalizacion}
                             id="periodo-capitalizacion"
                             value={{name: anualidadForm.tasaCompensatoria.periodoCapitalizacion}}
                             onChange={(e) => {
@@ -235,7 +245,7 @@ export function AnualidadesForm() {
                                 setAnualidadForm(formCopy)
                             }}
                             options={tipoPeriodo} optionLabel="name"
-                            placeholder="Tipo de crédito" className="w-full md:w-14rem"/>
+                            placeholder="periodo" className="w-full md:w-14rem"/>
                     </div>
                 </div>
             </Fieldset>
@@ -270,11 +280,18 @@ export function AnualidadesForm() {
                             onChange={(e) => {
                                 let formCopy = {...anualidadForm}
                                 formCopy.tasaMoratoria.tipo = e.value.name
+                                if(e.value.name==="EFECTIVA"){
+                                    setDisableCapitalizacion2(true)
+                                    formCopy.tasaMoratoria.periodoCapitalizacion = null
+                                }else if(e.value.name==="NOMINAL"){
+                                    setDisableCapitalizacion2(false)
+                                    formCopy.tasaMoratoria.periodoCapitalizacion = "DIARIO"
+                                }
                                 console.log(formCopy)
                                 setAnualidadForm(formCopy)
                             }}
                             options={tiposTasa} optionLabel="name"
-                            placeholder="Tipo de crédito" className="w-full md:w-14rem"/>
+                            placeholder="Tipo de tasa" className="w-full md:w-14rem"/>
                     </div>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="periodo-tasa">Periodo de la tasa</label>
@@ -288,11 +305,12 @@ export function AnualidadesForm() {
                                 setAnualidadForm(formCopy)
                             }}
                             options={tipoPeriodo} optionLabel="name"
-                            placeholder="Tipo de crédito" className="w-full md:w-14rem"/>
+                            placeholder="periodo" className="w-full md:w-14rem"/>
                     </div>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="periodo-capitalizacion">Periodo de capitalizacion</label>
                         <Dropdown
+                            disabled={disableCapitalizacion2}
                             id="periodo-capitalizacion"
                             value={{name: anualidadForm.tasaMoratoria.periodoCapitalizacion}}
                             onChange={(e) => {
@@ -302,7 +320,7 @@ export function AnualidadesForm() {
                                 setAnualidadForm(formCopy)
                             }}
                             options={tipoPeriodo} optionLabel="name"
-                            placeholder="Tipo de crédito" className="w-full md:w-14rem"/>
+                            placeholder="periodo" className="w-full md:w-14rem"/>
                     </div>
                 </div>
             </Fieldset>

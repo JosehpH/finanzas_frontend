@@ -63,8 +63,10 @@ export function StepperCredito() {
                     <Step1></Step1>
                     <div className="flex pt-4 justify-content-end">
                         <Button label="Next" icon="pi pi-arrow-right" iconPos="right" onClick={() => {
-                            if (clienteSelected != null)
+                            if (clienteSelected != null && clienteSelected.esApto)
                                 stepperRef.current.nextCallback()
+                            else if (!clienteSelected.esApto)
+                                alert("Para continuar el cliente debe pagar su deuda pendiente")
                             else
                                 alert("Selecciona un cliente para continuar")
                         }}/>
@@ -77,8 +79,10 @@ export function StepperCredito() {
                         <Button label="Back" severity="secondary" icon="pi pi-arrow-left"
                                 onClick={() => stepperRef.current.prevCallback()}/>
                         <Button label="Next" icon="pi pi-arrow-right" iconPos="right" onClick={() => {
-                            if (orden != null && orden?.items?.length > 0)
+                            if (orden != null && orden?.items?.length > 0 && orden?.total<=clienteSelected.limiteCrediticio)
                                 stepperRef.current.nextCallback()
+                            else if(orden?.total>clienteSelected.limiteCrediticio)
+                                alert("El total de la orden no debe ser mayor que la línea de crédito")
                             else
                                 alert("La orden está vacía")
                         }}/>

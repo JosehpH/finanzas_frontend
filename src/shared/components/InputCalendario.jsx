@@ -2,7 +2,7 @@ import {addLocale} from "primereact/api";
 import {Calendar} from "primereact/calendar";
 
 // eslint-disable-next-line react/prop-types
-export function InputCalendario({date,setDate}){
+export function InputCalendario({date,setDate,range,placeholder,hideOnRangeSelection}){
     addLocale('es', {
         firstDayOfWeek: 1,
         showMonthAfterYear: true,
@@ -16,7 +16,7 @@ export function InputCalendario({date,setDate}){
     });
     return (
         <div className="card flex justify-content-center">
-            <Calendar value={date} onChange={(e) => setDate(e.value)} locale="es" dateFormat="dd/mm/yy"/>
+            <Calendar hideOnRangeSelection={hideOnRangeSelection}  placeholder={placeholder} value={date} onChange={(e) => setDate(e.value)} locale="es" dateFormat="dd/mm/yy" selectionMode={range?"range":"single"}/>
         </div>
     )
 }

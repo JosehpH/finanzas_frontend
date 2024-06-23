@@ -54,8 +54,10 @@ export function NavBar() {
         }
     ];
 
-    const start = <img alt="logo" src="https://i.postimg.cc/Ls4XtRYj/dar-dinero.png" height="40"
-                       className="mr-2 img-nav-bar"></img>;
+    const start =<div className="flex flex-row align-items-center" style={{cursor:"pointer", color:"purple", fontWeight:"bold"}} onClick={()=>{
+        navigate("/home")
+    }}><img alt="logo" src="https://i.postimg.cc/Ls4XtRYj/dar-dinero.png" height="40"
+                       className="mr-2 img-nav-bar"></img> FinApp</div> ;
     const end = (
         <div className="card flex justify-content-center">
             <Toast ref={toast}></Toast>

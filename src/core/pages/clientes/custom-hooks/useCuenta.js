@@ -12,6 +12,8 @@ export function useCuenta(){
     const config = {
         headers: {Authorization: `Bearer ${token}`}
     };
+    const [success, setSuccess] = useState(false);
+
 
     const getCuenta = (clientId)=>{
         const url = `${resource}/${clientId}`;
@@ -35,9 +37,20 @@ export function useCuenta(){
         }).catch((e)=>{
             setLoading(false)
             alert("Error al obtener la orden")
-            console.log(e)
+            console.log("id:",creditoId,e)
         })
 
     }
-    return {orden,cuenta,http:{getCuenta,getOrden},state:{loading}}
+    const updateLineaCredito = (clienteId,limiteCrediticio) =>{
+        const url = `${resource}/${clienteId}`
+        setLoading(true)
+        axios.patch(url, {limiteCrediticio:limiteCrediticio},config).then((e)=>{
+            setLoading(false)
+            setSuccess(true)
+        }).catch((e)=>{
+            setLoading(false)
+            alert("Ocurrió un error")
+        })
+    }
+    return {orden,cuenta,http:{getCuenta,getOrden,updateLineaCredito},state:{loading,success,setSuccess}}
 }

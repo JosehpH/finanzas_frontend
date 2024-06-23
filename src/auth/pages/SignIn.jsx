@@ -14,7 +14,13 @@ export function SignIn(){
     return (
         <div className="flex h-full flex-column sign-in">
             <form className="auth-form w-22rem m-auto mt-8 flex flex-column align-items-center justify-content-center">
-                <h1>Iniciar sesión</h1>
+                <div className="flex flex-column align-items-center">
+                    <div className="w-2">
+                        <img src="https://i.postimg.cc/Ls4XtRYj/dar-dinero.png" alt="" style={{width: "100%"}}/>
+                    </div>
+                    <div>FinApp</div>
+                </div>
+                <h2>Iniciar sesión</h2>
                 <div className="flex flex-column gap-2">
                     <label htmlFor="username">Email</label>
                     <InputText id="username" aria-describedby="username-help" placeholder="Ingresa tu email" onChange={(e)=>setEmail(e.target.value)}/>
