@@ -1,7 +1,7 @@
 import {Button} from "primereact/button";
 import {StepperPanel} from "primereact/stepperpanel";
 import {Stepper} from "primereact/stepper";
-import {useContext, useRef} from "react";
+import {useContext, useRef, useState} from "react";
 import {Step1} from "../steps/Step1.jsx";
 import {Step2} from "../steps/Step2.jsx";
 import {Step3} from "../steps/Step3.jsx";
@@ -17,6 +17,9 @@ export function StepperCredito() {
     const stepperRef = useRef(null);
     const {creditoData,http,state} = useStep3();
     const {clienteSelected, orden, tipoCredito, valorFuturoForm, anualidadForm, checked} = useContext(StepperContext);
+    const [showDialog,setShowDialog] = useState(false)
+    const [message,setMessage] = useState(false)
+
     const solicitarCredito= ()=>{
         if (tipoCredito.tipo === "ANUALIDADES") {
             let formAnualidadesCopy = {...anualidadForm}
@@ -65,10 +68,15 @@ export function StepperCredito() {
                         <Button label="Next" icon="pi pi-arrow-right" iconPos="right" onClick={() => {
                             if (clienteSelected != null && clienteSelected.esApto)
                                 stepperRef.current.nextCallback()
-                            else if (!clienteSelected.esApto)
-                                alert("Para continuar el cliente debe pagar su deuda pendiente")
+                            else if (!clienteSelected.esApto) {
+                                setShowDialog(true)
+                                setMessage("el cliente tiene una deuda pendiente o no ha aperturado su cuenta")
+                            }
                             else
-                                alert("Selecciona un cliente para continuar")
+                            {
+                                setShowDialog(true)
+                                setMessage("Selecciona un cliente para continuar")
+                            }
                         }}/>
                     </div>
                 </StepperPanel>
@@ -81,10 +89,15 @@ export function StepperCredito() {
                         <Button label="Next" icon="pi pi-arrow-right" iconPos="right" onClick={() => {
                             if (orden != null && orden?.items?.length > 0 && orden?.total<=clienteSelected.limiteCrediticio)
                                 stepperRef.current.nextCallback()
-                            else if(orden?.total>clienteSelected.limiteCrediticio)
-                                alert("El total de la orden no debe ser mayor que la línea de crédito")
+                            else if(orden?.total>clienteSelected.limiteCrediticio) {
+                                setShowDialog(true)
+                                setMessage("El total de la orden no debe ser mayor que la línea de crédito")
+                            }
                             else
-                                alert("La orden está vacía")
+                            {
+                                setShowDialog(true)
+                                setMessage("La orden está vacía")
+                            }
                         }}/>
                     </div>
                 </StepperPanel>
@@ -118,6 +131,17 @@ export function StepperCredito() {
                 route={"/customers"}
                 onClick={()=>{
                     state.setSuccess(false);
+                }}
+            >
+            </NavDialog>
+            <NavDialog
+                success={showDialog}
+                message={message}
+                icono="pi pi-times-circle"
+                color="red"
+                route={null}
+                onClick={()=>{
+                    setShowDialog(false);
                 }}
             >
             </NavDialog>
