@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 export function useSignIn(){
-    const [signInRequest,setSignInRequest] = useState({email:"",password:""})
+    const [signInRequest,setSignInRequest] = useState({email:"herrera1@gmail.com",password:"herrera1"})
     const setPassword = (password)=>{
         setSignInRequest((prev)=>({
             ...prev,

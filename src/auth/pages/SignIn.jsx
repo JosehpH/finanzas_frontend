@@ -19,15 +19,16 @@ export function SignIn(){
                         <img src="https://i.postimg.cc/Ls4XtRYj/dar-dinero.png" alt="" style={{width: "100%"}}/>
                     </div>
                     <div>FinApp</div>
+                    <div>(Cuenta demo)</div>
                 </div>
                 <h2>Iniciar sesión</h2>
                 <div className="flex flex-column gap-2">
                     <label htmlFor="username">Email</label>
-                    <InputText id="username" aria-describedby="username-help" placeholder="Ingresa tu email" onChange={(e)=>setEmail(e.target.value)}/>
+                    <InputText id="username" value={signInRequest.email} aria-describedby="username-help" placeholder="Ingresa tu email" onChange={(e)=>setEmail(e.target.value)}/>
                 </div>
                 <div className="flex flex-column gap-2">
                     <label htmlFor="username">Password</label>
-                    <InputText type="password" id="username" aria-describedby="username-help" placeholder="Ingresa tu contraseña" onChange={(e)=>setPassword(e.target.value)}/>
+                    <InputText type="password" value={signInRequest.password} id="username" aria-describedby="username-help" placeholder="Ingresa tu contraseña" onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
                 <p className="m-0 mt-2"><small className="recovery-password-link">He olvidado mi contraseña</small></p>
                 <p className="m-0 mb-3"><small> No tienes una cuenta?</small><strong
@@ -37,7 +38,6 @@ export function SignIn(){
                 </div>
             </form>
           <SpinnerDialog loading={loading}/>
-
         </div>
     )
 }
